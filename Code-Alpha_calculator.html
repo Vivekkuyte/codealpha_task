@@ -210,23 +210,23 @@
     </div>
 
     <script>
-        // Calculator state
+        
         let currentOperand = '0';
         let previousOperand = '';
         let operation = null;
         let resetScreen = false;
 
-        // DOM Elements
+        
         const currentOperandElement = document.getElementById('current-operand');
         const previousOperandElement = document.getElementById('previous-operand');
 
-        // Update the display
+        
         function updateDisplay() {
             currentOperandElement.textContent = currentOperand;
             previousOperandElement.textContent = previousOperand;
         }
 
-        // Reset calculator
+        
         function clear() {
             currentOperand = '0';
             previousOperand = '';
@@ -234,7 +234,7 @@
             updateDisplay();
         }
 
-        // Delete the last character
+        
         function deleteLast() {
             if (currentOperand.length === 1 || (currentOperand.length === 2 && currentOperand.startsWith('-'))) {
                 currentOperand = '0';
@@ -244,7 +244,7 @@
             updateDisplay();
         }
 
-        // Append number to current operand
+    
         function appendNumber(number) {
             if (resetScreen) {
                 currentOperand = '';
@@ -260,7 +260,7 @@
             updateDisplay();
         }
 
-        // Append decimal point
+    
         function appendDecimal() {
             if (resetScreen) {
                 currentOperand = '0';
@@ -272,7 +272,7 @@
             updateDisplay();
         }
 
-        // Choose operation
+        
         function chooseOperation(op) {
             if (currentOperand === '0' && previousOperand === '') return;
             
@@ -286,7 +286,7 @@
             updateDisplay();
         }
 
-        // Perform calculation
+        
         function compute() {
             let computation;
             const prev = parseFloat(previousOperand.split(' ')[0]);
@@ -316,7 +316,7 @@
                     return;
             }
             
-            // Format result to avoid floating point precision issues
+            
             computation = Math.round(computation * 100000000) / 100000000;
             
             currentOperand = computation.toString();
@@ -326,7 +326,7 @@
             updateDisplay();
         }
 
-        // Handle keyboard input
+        
         function handleKeyboardInput(e) {
             if (e.key >= '0' && e.key <= '9') appendNumber(e.key);
             if (e.key === '.') appendDecimal();
@@ -341,47 +341,48 @@
             if (e.key === 'Backspace') deleteLast();
         }
 
-        // Event Listeners
+    
         document.addEventListener('DOMContentLoaded', () => {
             updateDisplay();
             
-            // Number buttons
+            
             document.querySelectorAll('[data-number]').forEach(button => {
                 button.addEventListener('click', () => {
                     appendNumber(button.getAttribute('data-number'));
                 });
             });
             
-            // Decimal button
+            
             document.querySelector('[data-decimal]').addEventListener('click', () => {
                 appendDecimal();
             });
             
-            // Operation buttons
+            
             document.querySelectorAll('[data-operation]').forEach(button => {
                 button.addEventListener('click', () => {
                     chooseOperation(button.getAttribute('data-operation'));
                 });
             });
             
-            // Equals button
+            
             document.querySelector('[data-action="equals"]').addEventListener('click', () => {
                 compute();
             });
             
-            // Clear button
+            
             document.querySelector('[data-action="clear"]').addEventListener('click', () => {
                 clear();
             });
             
-            // Delete button
+            
             document.querySelector('[data-action="delete"]').addEventListener('click', () => {
                 deleteLast();
             });
             
-            // Keyboard support
+    
             document.addEventListener('keydown', handleKeyboardInput);
         });
     </script>
 </body>
+
 </html>
